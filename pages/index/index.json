@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "mp-icon": "/dist/miniprogram_dist/icon/icon"
+  }
+}

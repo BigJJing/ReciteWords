@@ -1,0 +1,43 @@
+<!--index.wxml-->
+<!--index.wxml-->
+<view>
+<!-- 侧边滑动菜单 -->
+  <view class="page-slidebar">
+    <view class="weui-cell">
+        <view class="weui-cell__hd"><mp-icon icon="note" color="black" size="{{25}}"></mp-icon></view>
+        <view class="weui-cell__bd">
+            正在记
+        </view>
+    </view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd"><view><mp-icon icon="star" color="black" size="{{25}}"></mp-icon></view></view>
+        <view class="weui-cell__bd">
+            易忘记
+        </view>
+    </view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd"><view><mp-icon icon="done" color="black" size="{{25}}"></mp-icon></view></view>
+        <view class="weui-cell__bd">
+            已牢记
+        </view>
+    </view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd"><view><mp-icon icon="setting" color="black" size="{{25}}"></mp-icon></view></view>
+        <view class="weui-cell__bd">
+            设置
+        </view>
+    </view>
+    <view class="weui-cell">
+        <view class="weui-cell__hd"><view><mp-icon icon="comment" color="black" size="{{25}}"></mp-icon></view></view>
+        <view class="weui-cell__bd">
+          反馈
+        </view>
+    </view>
+  </view>
+<!-- 主页内容 -->
+  <view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? ['c-state','cover'] : ''}} ">
+    <view class="usermotto">
+
+    </view>
+  </view>
+</view>
