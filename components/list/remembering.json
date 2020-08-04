@@ -1,0 +1,10 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mp-cells": "/dist/miniprogram_dist/cells/cells",
+    "mp-cell": "/dist/miniprogram_dist/cell/cell",
+    "mp-slideview": "/dist/miniprogram_dist/slideview/slideview",
+    "mp-icon": "/dist/miniprogram_dist/icon/icon"
+  }
+  
+}

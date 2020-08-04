@@ -37,10 +37,23 @@ Page({
       this.setData({
         isEnDisplay: !this.data.isEnDisplay
       })
+      this._updateWordsDisplayStatus(this.data.isEnDisplay)
     },
     changeZhStatus() {
       this.setData({
         isZhDisplay: !this.data.isZhDisplay
+      })
+      this._updateWordsDisplayStatus(this.data.isZhDisplay)
+      
+    },
+    _updateWordsDisplayStatus(isDisplay) {  //isDisplay: true,false
+      let words = this.data.words;
+      words.forEach(item => {
+        item.display = isDisplay
+      })
+      console.log(words)
+      this.setData({
+        words: words
       })
     },
     displayWord(e) {

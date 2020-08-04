@@ -1,43 +1,46 @@
 <!--index.wxml-->
 <!--index.wxml-->
-<view>
+<view class="main">
 <!-- 侧边滑动菜单 -->
   <view class="page-slidebar">
-    <view class="weui-cell">
-        <view class="weui-cell__hd"><mp-icon icon="note" color="black" size="{{25}}"></mp-icon></view>
+    <view class="weui-cell {{nowPage == 0 ? 'selected' : ''}}" bindtap="toPage" data-type="0">
+        <view class="weui-cell__hd"><mp-icon icon="note" color="{{nowPage == 0 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view>
         <view class="weui-cell__bd">
             正在记
         </view>
     </view>
-    <view class="weui-cell">
-        <view class="weui-cell__hd"><view><mp-icon icon="star" color="black" size="{{25}}"></mp-icon></view></view>
+    <view class="weui-cell {{nowPage == 1 ? 'selected' : ''}}" bindtap="toPage" data-type="1">
+        <view class="weui-cell__hd"><view><mp-icon icon="star" color="{{nowPage == 1 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
         <view class="weui-cell__bd">
             易忘记
         </view>
     </view>
-    <view class="weui-cell">
-        <view class="weui-cell__hd"><view><mp-icon icon="done" color="black" size="{{25}}"></mp-icon></view></view>
+    <view class="weui-cell {{nowPage == 2 ? 'selected' : ''}}" bindtap="toPage" data-type="2">
+        <view class="weui-cell__hd"><view><mp-icon icon="done" color="{{nowPage == 2 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
         <view class="weui-cell__bd">
             已牢记
         </view>
     </view>
-    <view class="weui-cell">
-        <view class="weui-cell__hd"><view><mp-icon icon="setting" color="black" size="{{25}}"></mp-icon></view></view>
+    <view class="weui-cell {{nowPage == 3 ? 'selected' : ''}}" bindtap="toPage" data-type="3">
+        <view class="weui-cell__hd"><view><mp-icon icon="setting" color="{{nowPage == 3 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
         <view class="weui-cell__bd">
             设置
         </view>
     </view>
-    <view class="weui-cell">
-        <view class="weui-cell__hd"><view><mp-icon icon="comment" color="black" size="{{25}}"></mp-icon></view></view>
+    <view class="weui-cell {{nowPage == 4 ? 'selected' : ''}}" bindtap="toPage" data-type="4">
+        <view class="weui-cell__hd"><view><mp-icon icon="comment" color="{{nowPage == 4 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
         <view class="weui-cell__bd">
           反馈
         </view>
     </view>
   </view>
 <!-- 主页内容 -->
-  <view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? ['c-state','cover'] : ''}} ">
-    <view class="usermotto">
-
+  <view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? ['c-state','cover'] : ''}} {{toRelative ? 'page-relative' : 'page-fix'}}">
+    <!-- 浮动按钮 -->
+    <view class="menu-btn" bindtap="openMenu">
+      <mp-icon icon="me" color="white" size="{{30}}"></mp-icon>
     </view>
+    <remembering wx:if="{{nowPage < 3}}" pageType="{{nowPage}}"/>
+    
   </view>
 </view>

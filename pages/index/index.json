@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "mp-icon": "/dist/miniprogram_dist/icon/icon"
+    "mp-icon": "/dist/miniprogram_dist/icon/icon",
+    "remembering": "/components/list/remembering"
   }
 }

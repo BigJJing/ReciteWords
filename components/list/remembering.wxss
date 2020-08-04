@@ -1,0 +1,29 @@
+/* pages/wordsList/wordsList.wxss */
+.page{
+  position: relative;
+}
+.topMenu{
+  position: fixed;
+  top:0;
+  width: 100%;
+  background-color: #eee;
+  z-index: 99;
+}
+.topMenu .left , .topMenu .right{
+  width: 50%;
+  display: inline-block;
+  text-align: center;
+}
+.eye_btn{
+  display: inline-block;
+  padding: 10px 20px;
+} 
+.list{
+  margin-top:50px;
+}
+.list .weui-cells{
+  margin-top: 0;
+}
+.min_width_set .weui-cell__bd{
+  min-width: 60% !important;
+}
