@@ -6,16 +6,21 @@
     height: 100%;
     width: 65%;
     position: fixed;
+    left:0;
     top: 0;
     background-color:white;
     z-index: 0;
 }
+.page-slidebar-hide{
+    opacity: 0;
+}
  /* 主页样式 */
 .page-top {
     top: 0;
+    left:0;
     width: 100%;
     background-color:white;
-    z-index: 0;
+    z-index: 1;
     transition: All 0.4s ease;
     -webkit-transition: All 0.4s ease;
 }
@@ -53,7 +58,7 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background-color: #92b6dc;
+    background-color: rgba(146,182,220,0.7);
     text-align: center;
     line-height: 60px;
     z-index:999;
@@ -67,4 +72,32 @@
 }
 .page-slidebar .selected{
     color:#5cabff !important;
+}
+.menu-btns{
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    width: 120px;
+    height: 50px;
+   
+    z-index:1000
+}
+.menu-btns .left-btn,.menu-btns .right-btn{
+    background: rgba(146,182,220,0.7);
+    width: 50px;
+    height: 40px;
+    padding: 0 5px;
+    text-align: center;
+    line-height: 40px;
+}
+.menu-btns .left-btn{
+    position: absolute;
+    left:0;
+    border-radius: 20px 0 0 20px;
+}
+
+.menu-btns .right-btn{
+    position: absolute;
+    right:0;
+    border-radius: 0 20px 20px 0;
 }

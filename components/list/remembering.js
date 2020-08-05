@@ -23,18 +23,18 @@ Component({
     }],
 
     words:[
+      {en:"hello",zh:"你好",display:false},
+      {en:"world",zh:"世界",display:false},
+      {en:"hello",zh:"你好",display:false},
+      {en:"world",zh:"世界",display:false},
+      {en:"hello",zh:"你好",display:false},
+      {en:"world",zh:"世界",display:false},
+      {en:"hello",zh:"你好",display:false},
+      {en:"world",zh:"世界",display:false},
+      {en:"hello",zh:"你好",display:false},
+      {en:"world",zh:"世界",display:false},
       {en:"In the previous step of the React.js interview questions, we talked about iteration methods where we have put some lights on the for-loop and forEach methods.",zh:"在React.js采访问题的上一步中，我们讨论了迭代方法，在此我们对for循环和forEach方法进行了一些介绍。",display:false},
       {en:"In the previous step of the React.js interview questions, we talked about iteration methods where we have put some lights on the for-loop and forEach methods.",zh:"在React.js采访问题的上一步中，我们讨论了迭代方法，在此我们对for循环和forEach方法进行了一些介绍。",display:false},
-      {en:"world",zh:"世界",display:false,type:0},
-      {en:"hello",zh:"你好",display:false,type:0},
-      {en:"world",zh:"世界",display:false},
-      {en:"hello",zh:"你好",display:false},
-      {en:"world",zh:"世界",display:false},
-      {en:"hello",zh:"你好",display:false},
-      {en:"world",zh:"世界",display:false},
-      {en:"hello",zh:"你好",display:false},
-      {en:"world",zh:"世界",display:false},
-      {en:"hello",zh:"你好",display:false},
       {en:"world",zh:"世界",display:false},
       {en:"hello",zh:"你好",display:false},
       {en:"world",zh:"世界",display:false},
@@ -47,48 +47,7 @@ Component({
   lifetimes: {
     attached() {
       console.log(this.data.pageType);
-      let type = this.data.pageType;
-      /*
-      * 0: remembering
-      * 1: easy to forget
-      * 2: remembered
-      */
-      if(type == 0){
-        this.setData({
-          slideButtons: [{
-            text: '易忘记',
-          },
-          {
-            text: '已牢记',
-          },
-          {
-            type: 'warn',
-            text: '删除',
-          }],
-        })
-      }
-      if(type == 1){
-        this.setData({
-          slideButtons: [{
-            text: '已牢记',
-          },
-          {
-            type: 'warn',
-            text: '删除',
-          }],
-        })
-      }
-      if(type == 2){
-        this.setData({
-          slideButtons: [{
-            text: '正在记',
-          },
-          {
-            type: 'warn',
-            text: '删除',
-          }],
-        })
-      }
+      this._updatePageType();
     }
   },
   /**
@@ -134,6 +93,50 @@ Component({
       this.setData({
         words: words
       })
+    },
+    _updatePageType() {
+      let type = this.data.pageType;
+      /*
+      * 0: remembering
+      * 1: easy to forget
+      * 2: remembered
+      */
+      if(type == 0){
+        this.setData({
+          slideButtons: [{
+            text: '易忘记',
+          },
+          {
+            text: '已牢记',
+          },
+          {
+            type: 'warn',
+            text: '删除',
+          }],
+        })
+      }
+      if(type == 1){
+        this.setData({
+          slideButtons: [{
+            text: '已牢记',
+          },
+          {
+            type: 'warn',
+            text: '删除',
+          }],
+        })
+      }
+      if(type == 2){
+        this.setData({
+          slideButtons: [{
+            text: '正在记',
+          },
+          {
+            type: 'warn',
+            text: '删除',
+          }],
+        })
+      }
     }
   }
 })

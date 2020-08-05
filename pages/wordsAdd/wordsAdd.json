@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "mp-form": "/dist/miniprogram_dist/form/form"
+  }
+}

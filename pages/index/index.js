@@ -45,5 +45,10 @@ Page({
    that.setData({
       nowPage: type
     })
+  },
+  addNew() {
+    wx.navigateTo({
+      url: '/pages/wordsAdd/wordsAdd'
+    })
   }
 })

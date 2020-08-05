@@ -2,7 +2,7 @@
 <!--index.wxml-->
 <view class="main">
 <!-- 侧边滑动菜单 -->
-  <view class="page-slidebar">
+  <view class="page-slidebar {{toRelative ? 'page-slidebar-hide' : ''}}">
     <view class="weui-cell {{nowPage == 0 ? 'selected' : ''}}" bindtap="toPage" data-type="0">
         <view class="weui-cell__hd"><mp-icon icon="note" color="{{nowPage == 0 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view>
         <view class="weui-cell__bd">
@@ -37,10 +37,23 @@
 <!-- 主页内容 -->
   <view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? ['c-state','cover'] : ''}} {{toRelative ? 'page-relative' : 'page-fix'}}">
     <!-- 浮动按钮 -->
+    <view class="menu-btns">
+      <view class="left-btn" bindtap="openMenu">
+        <mp-icon icon="me" color="white" size="{{30}}"></mp-icon>
+      </view>
+      <view class="right-btn" bindtap="addNew">
+        <mp-icon icon="add" color="white" size="{{30}}"></mp-icon>
+      </view>
+    </view>
+    <!--
     <view class="menu-btn" bindtap="openMenu">
       <mp-icon icon="me" color="white" size="{{30}}"></mp-icon>
     </view>
-    <remembering wx:if="{{nowPage < 3}}" pageType="{{nowPage}}"/>
-    
+    -->
+    <remembering wx:if="{{nowPage == 0}}" pageType="0"/>
+    <remembering wx:if="{{nowPage == 1}}" pageType="1"/>
+    <remembering wx:if="{{nowPage == 2}}" pageType="2"/>
+    <settings wx:if="{{nowPage == 3}}"/>
+    <feedback wx:if="{{nowPage == 4}}"/>
   </view>
 </view>
