@@ -3,6 +3,13 @@
 <view class="main">
 <!-- 侧边滑动菜单 -->
   <view class="page-slidebar {{toRelative ? 'page-slidebar-hide' : ''}}">
+    <view class="login">
+      <block wx:if="{{!hasUserInfo && canIUse}}">
+        <view class="avatar"><image src="/dist/image/user.svg"></image></view>
+        <button size="mini" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
+      </block>
+      <view wx:else class="avatar"><image src="{{userInfo.avatarUrl}}"></image></view>
+    </view>
     <view class="weui-cell {{nowPage == 0 ? 'selected' : ''}}" bindtap="toPage" data-type="0">
         <view class="weui-cell__hd"><mp-icon icon="note" color="{{nowPage == 0 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view>
         <view class="weui-cell__bd">
