@@ -2,12 +2,13 @@
 
 <view class="page">
   <view class="page__bd">
+  <form bindsubmit="onSubmit">
     <view class="{{isNext ? 'animation-page' : ''}}">
       <view class="weui-cells__title">原</view>
       <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">
               <view class="weui-cell__bd">
-                  <textarea class="weui-textarea" value="{{origin}}" placeholder="建议输入语言为：英语、法语等" style="height: 3.3em" />
+                  <textarea name="origin" class="weui-textarea" value="{{origin}}" placeholder="建议输入语言为：英语、法语等" style="height: 3.3em" />
               </view>
           </view>
       </view>
@@ -16,15 +17,16 @@
       <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">
               <view class="weui-cell__bd">
-                  <textarea class="weui-textarea" value="{{translation}}" placeholder="建议输入语言为：汉语" style="height: 3.3em" />
+                  <textarea name="translation" class="weui-textarea" value="{{translation}}" placeholder="建议输入语言为：汉语" style="height: 3.3em" />
               </view>
           </view>
       </view>
     </view>
 
     <view class="weui-btn-area">
-        <button class="weui-btn" type="primary" bindtap="goBack">完成</button>
+        <button class="weui-btn" type="primary"  form-type="submit">完成</button>
         <button class="weui-btn" type="default" bindtap="goNext">添加下一个</button>
     </view>
+</form>
   </view>
 </view>

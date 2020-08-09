@@ -10,6 +10,7 @@ Page({
     translation: ""
   },
   goNext(e) {
+    this.addWord();
     this.setData({
       isNext: true
     })
@@ -27,6 +28,32 @@ Page({
     },1000)
   },
   goBack(e) {
-    wx.navigateBack();
+    
+    //wx.navigateBack();
+  },
+  onSubmit(e){
+    console.log(e);
+    let that = this;
+    wx.request({
+      url:'',
+      method: "POST",
+      data:{
+        en: e.detail.value.origin,
+        zh: e.detail.value.translation
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res){
+        console.log(res);
+       //wx.navigateBack();
+      },
+      fail(err){
+        console.log(err)
+      }
+    })
+  },
+  addWord(){
+
   }
 })
