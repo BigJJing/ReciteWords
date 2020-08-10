@@ -21,7 +21,6 @@ Component({
       type: 'warn',
       text: '删除',
     }],
-
     words:[
       {en:"hello",zh:"你好",display:false},
       {en:"world",zh:"世界",display:false},
@@ -43,6 +42,7 @@ Component({
     ],
     isEnDisplay: true,
     isZhDisplay: true, 
+    pronounciation: ""
   },
   lifetimes: {
     attached() {
@@ -96,13 +96,31 @@ Component({
     },
     _updatePageType() {
       let type = this.data.pageType;
+      let that = this;
+      /*
+      wx.request({
+        url: '',
+        method: 'GET',
+        data: {
+          type: type
+        },
+        success(res) {
+          that.setData({
+            words: res.data
+          })
+        },
+        fail(err) {
+          console.log(err)
+        }
+      })
+      */
       /*
       * 0: remembering
       * 1: easy to forget
       * 2: remembered
       */
       if(type == 0){
-        this.setData({
+        that.setData({
           slideButtons: [{
             text: '易忘记',
           },
@@ -116,7 +134,7 @@ Component({
         })
       }
       if(type == 1){
-        this.setData({
+        that.setData({
           slideButtons: [{
             text: '已牢记',
           },
@@ -127,7 +145,7 @@ Component({
         })
       }
       if(type == 2){
-        this.setData({
+        that.setData({
           slideButtons: [{
             text: '正在记',
           },
@@ -137,6 +155,24 @@ Component({
           }],
         })
       }
+    },
+    pronounce(e) {
+      console.log(e.currentTarget.dataset.word);
+      let word = e.currentTarget.dataset.word;
+      let that = this;
+      wx.request({
+        url: 'https://dict.youdao.com/dictvoice?type=0&audio=hello',
+        method: 'GET',
+        success(res) {
+          console.log(res);
+          that.setData({
+            pronounciation: res.data
+          })
+        },
+        fail(err) {
+          console.log(err)
+        }
+      })
     }
   }
 })

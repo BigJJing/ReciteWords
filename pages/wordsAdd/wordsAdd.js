@@ -28,12 +28,13 @@ Page({
     },1000)
   },
   goBack(e) {
-    
+
     //wx.navigateBack();
   },
   onSubmit(e){
     console.log(e);
     let that = this;
+    /*
     wx.request({
       url:'',
       method: "POST",
@@ -52,6 +53,7 @@ Page({
         console.log(err)
       }
     })
+    */
   },
   addWord(){
 

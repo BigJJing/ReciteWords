@@ -20,6 +20,9 @@
               <mp-cell wx:if="{{item.display}}" value="{{item.en}}" footer="{{item.zh}}"></mp-cell>
               <mp-cell wx:else model:value="{{isEnDisplay ? item.en : '...'}}" model:footer="{{isZhDisplay ? item.zh : '...'}}"></mp-cell>
           </mp-slideview>
+          <!--
+          <view bindtap="pronounce" data-word="{{item.en}}">aa{{pronounciation}}</view>
+          -->
       </view>
     </view>
 </view>

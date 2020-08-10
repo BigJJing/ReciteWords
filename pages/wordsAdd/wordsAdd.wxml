@@ -27,6 +27,7 @@
         <button class="weui-btn" type="primary"  form-type="submit">完成</button>
         <button class="weui-btn" type="default" bindtap="goNext">添加下一个</button>
     </view>
+    
 </form>
   </view>
 </view>
