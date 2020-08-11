@@ -14,11 +14,18 @@
             </mp-icon>
         </view>
     </view>
-    <view class="page__bd list">
-      <view class="weui-cells" wx:for="{{words}}" bindtap="displayWord"  data-index="{{index}}">
-          <mp-slideview buttons="{{slideButtons}}" bindbuttontap="slideButtonTap" model:class="{{(isEnDisplay&&isZhDisplay)||item.display ? 'min_width_set' : ''}}">
+    <view>{{isEnDisplay&&isZhDisplay}}</view>
+    <view class="page__bd list">  
+      <view class="weui-cells" wx:for="{{words}}">
+          <mp-slideview buttons="{{slideButtons}}"  
+                        bindtap="displayWord" bindbuttontap="slideButtonTap" 
+                        data-index="{{index}}" data-id="{{item.id}}"
+                        class="{{WordMoving === item.id ? 'moveAnimation':'zzz'}}">
               <mp-cell wx:if="{{item.display}}" value="{{item.en}}" footer="{{item.zh}}"></mp-cell>
-              <mp-cell wx:else model:value="{{isEnDisplay ? item.en : '...'}}" model:footer="{{isZhDisplay ? item.zh : '...'}}"></mp-cell>
+              <mp-cell wx:else model:value="{{isEnDisplay ? item.en : '...'}}" 
+                               model:footer="{{isZhDisplay ? item.zh : '...'}}"  
+                               class="{{(isEnDisplay&&isZhDisplay)||item.display ? 'min_width_set' : ''}}">
+              </mp-cell>
           </mp-slideview>
           <!--
           <view bindtap="pronounce" data-word="{{item.en}}">aa{{pronounciation}}</view>
