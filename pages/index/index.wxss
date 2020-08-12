@@ -8,11 +8,13 @@
     position: fixed;
     left:0;
     top: 0;
-    background-color:white;
-    z-index: 0;
+    background-color:#fff;
+    z-index: 999;
+    transition: All 0.4s ease;
+    -webkit-transition: All 0.4s ease;
 }
 .page-slidebar-hide{
-    opacity: 0;
+    left: -65%;
 }
  /* 主页样式 */
 .page-top {
@@ -79,8 +81,12 @@
     right: 1rem;
     width: 120px;
     height: 50px;
-   
-    z-index:1000
+    opacity: 100;
+    transition: all 0.4s ease;
+    z-index:1000;
+}
+.menu-btns-hide{
+    opacity: 0;
 }
 .menu-btns .left-btn,.menu-btns .right-btn{
     background: rgba(146,182,220,0.7);

@@ -7,7 +7,8 @@ Page({
   data: {
     isNext:false,
     origin: "",
-    translation: ""
+    translation: "",
+    error:""
   },
   goNext(e) {
     this.addWord();
@@ -33,29 +34,53 @@ Page({
   },
   onSubmit(e){
     console.log(e);
+    if(e.detail.value.origin == ""){
+      this.setData({
+        error: "原文记得要有内容 ~"
+      })
+      return false;
+    }
+    else if(e.detail.value.translation == ""){
+      this.setData({
+        error: "译文记得要有内容 ~"
+      })
+      return false;
+    }
+    let isNext = e.detail.target.dataset.next;
     let that = this;
-    /*
     wx.request({
-      url:'',
+      url:'https://tfleof.top/words/createWord',
       method: "POST",
       data:{
         en: e.detail.value.origin,
         zh: e.detail.value.translation
       },
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json'
       },
       success(res){
         console.log(res);
-       //wx.navigateBack();
+        if(isNext === "true"){
+          that.setData({
+            origin: "",
+            translation: ""
+          })
+        }
+        else{
+          wx.navigateBack();
+        }
       },
       fail(err){
         console.log(err)
       }
     })
-    */
   },
   addWord(){
 
+  },
+  tapDialogButton(e) {
+    this.setData({
+      showOneButtonDialog: false
+    })
   }
 })

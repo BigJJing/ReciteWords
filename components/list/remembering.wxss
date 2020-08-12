@@ -28,15 +28,4 @@
 .min_width_set .weui-cell__bd{
   min-width: 60% !important;
 }
-.moveAnimation{
-  animation: remove 0.5s;
-}
-@keyframes remove{
-  from{
-    color:#000;
-  }
-  to{
-    color:#fff;
-  }
-}
 

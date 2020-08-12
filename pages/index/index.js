@@ -62,14 +62,9 @@ Page({
   tap_end(e) {
     if(this.data.open){
       this.setData({
-        open: false
+        open: false,
+        toRelative: true
       });
-      let that = this;
-      setTimeout(function(){
-        that.setData({
-          toRelative: true
-        });
-      },800)
       return;
     }
   },

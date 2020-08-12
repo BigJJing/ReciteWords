@@ -2,6 +2,7 @@
 
 <view class="page">
   <view class="page__bd">
+  <mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
   <form bindsubmit="onSubmit">
     <view class="{{isNext ? 'animation-page' : ''}}">
       <view class="weui-cells__title">原</view>
@@ -24,8 +25,8 @@
     </view>
 
     <view class="weui-btn-area">
-        <button class="weui-btn" type="primary"  form-type="submit">完成</button>
-        <button class="weui-btn" type="default" bindtap="goNext">添加下一个</button>
+        <button class="weui-btn" type="primary" form-type="submit" data-next="false">完成</button>
+        <button class="weui-btn" type="default" form-type="submit" data-next="true">添加下一个</button>
     </view>
     
 </form>

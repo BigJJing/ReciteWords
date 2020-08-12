@@ -1,6 +1,15 @@
 <!--index.wxml-->
 <!--index.wxml-->
 <view class="main">
+<!-- 浮动按钮 -->
+<view class="menu-btns {{!toRelative ? 'menu-btns-hide' : ''}}">
+  <view class="left-btn" bindtap="openMenu">
+    <mp-icon icon="me" color="white" size="{{30}}"></mp-icon>
+  </view>
+  <view class="right-btn" bindtap="addNew">
+    <mp-icon icon="add" color="white" size="{{30}}"></mp-icon>
+  </view>
+</view>
 <!-- 侧边滑动菜单 -->
   <view class="page-slidebar {{toRelative ? 'page-slidebar-hide' : ''}}">
     <view class="login">
@@ -43,15 +52,6 @@
   </view>
 <!-- 主页内容 -->
   <view bindtouchmove="tap_drag" bindtouchend="tap_end" bindtouchstart="tap_start" class="page-top {{open ? ['c-state','cover'] : ''}} {{toRelative ? 'page-relative' : 'page-fix'}}">
-    <!-- 浮动按钮 -->
-    <view class="menu-btns">
-      <view class="left-btn" bindtap="openMenu">
-        <mp-icon icon="me" color="white" size="{{30}}"></mp-icon>
-      </view>
-      <view class="right-btn" bindtap="addNew">
-        <mp-icon icon="add" color="white" size="{{30}}"></mp-icon>
-      </view>
-    </view>
     <!--
     <view class="menu-btn" bindtap="openMenu">
       <mp-icon icon="me" color="white" size="{{30}}"></mp-icon>

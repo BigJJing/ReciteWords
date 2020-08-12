@@ -24,31 +24,21 @@ Component({
     words:[
       {id:'1',en:"hello",zh:"你好",display:false},
       {id:'2',en:"world",zh:"世界",display:false},
-      {id:'3',en:"hello",zh:"你好",display:false},
-      {id:'4',en:"world",zh:"世界",display:false},
-      {id:'5',en:"hello",zh:"你好",display:false},
-      {id:'6',en:"world",zh:"世界",display:false},
-      {id:'7',en:"hello",zh:"你好",display:false},
-      {id:'8',en:"world",zh:"世界",display:false},
-      {id:'9',en:"hello",zh:"你好",display:false},
-      {id:'11',en:"world",zh:"世界",display:false},
-      {id:'12',en:"In the previous step of the React.js interview questions, we talked about iteration methods where we have put some lights on the for-loop and forEach methods.",zh:"在React.js采访问题的上一步中，我们讨论了迭代方法，在此我们对for循环和forEach方法进行了一些介绍。",display:false},
-      {id:'13',en:"In the previous step of the React.js interview questions, we talked about iteration methods where we have put some lights on the for-loop and forEach methods.",zh:"在React.js采访问题的上一步中，我们讨论了迭代方法，在此我们对for循环和forEach方法进行了一些介绍。",display:false},
-      {id:'14',en:"world",zh:"世界",display:false},
-      {id:'15',en:"hello",zh:"你好",display:false},
-      {id:'16',en:"world",zh:"世界",display:false},
-      {id:'17',en:"hello",zh:"你好",display:false},
-      {id:'18',en:"world",zh:"世界",display:false},
     ],
     isEnDisplay: true,
     isZhDisplay: true, 
     pronounciation: "",
-    WordMoving:""
   },
   lifetimes: {
     attached() {
       console.log(this.data.pageType);
       this._updatePageType();
+    }
+  },
+  pageLifetimes:{
+    show(){
+      console.log(this.data.pageType);
+      this._updatePageType()
     }
   },
   /**
@@ -59,20 +49,42 @@ Component({
       console.log(e);
       let id = e.currentTarget.dataset.id;
       console.log('slide button tap', e.detail);
-      this.moveWordEffect(id);
-      //if()
+      console.log(id)
+      //this.moveWordEffect(id);
+       /*
+      * 0: remembering
+      * 1: easy to forget
+      * 2: remembered
+      */
+     let pageType = this.data.pageType;
+     let buttonType = e.detail.index;
+     console.log(pageType,buttonType)
+      if(pageType == 0){
+        if(buttonType == 0) this.moveToEasyForget(id);
+        else if(buttonType == 1) this.moveToRemembered(id);
+        else if(buttonType == 2) this.removeWord(id);
+      }
+      else if(pageType == 1){
+        if(buttonType == 0) this.moveToRemembered(id);
+        else if(buttonType == 1) this.removeWord(id);
+      }
+      else if(pageType == 2){
+        if(buttonType == 0) this.moveToRemembering(id);
+        else if(buttonType == 1) this.removeWord(id);
+      }
     },
     removeWord(id) {
       console.log("remove!");
+      let that = this;
       wx.request({
-        url: '',
+        url: 'https://tfleof.top/words/deleteWord/' + id,
         method: 'DELETE',
         data: {
           id: id,
         },
         success(res){
           console.log(res);
-          this.moveWordEffect(id);
+          that.moveWordEffect(id);
         },
         fail(err){
           console.log(err)
@@ -81,16 +93,21 @@ Component({
     },
     moveToEasyForget(id) {
       console.log("moveToEasyForget!!")
+      let that = this;
+  
       wx.request({
-        url: '',
+        url: 'https://tfleof.top/words/updateWordStatusById',
         method: 'PUT',
         data: {
-          id: id,
-          type: 1
+          'id': id,
+          'status': 1
+        },
+        header: {
+          'content-type': 'application/json'
         },
         success(res){
           console.log(res);
-          this.moveWordEffect(id);
+          that.moveWordEffect(id);
         },
         fail(err){
           console.log(err)
@@ -136,9 +153,6 @@ Component({
     //移除单词动效
     moveWordEffect(id) {
       let words = this.data.words;
-      this.setData({
-        WordMoving: id
-      })
       words.forEach((item,index) => {
         if(item.id === id){
           words.splice(index,1);
@@ -146,11 +160,16 @@ Component({
         }
       })
       let that = this;
+      that.setData({
+        words: words
+      })
+      /*
       setTimeout(function(){
         that.setData({
           words: words
         })
-      },400)  
+      },200)  
+      */
     },
     //改变英文列表显示隐藏状态
     changeEnStatus() {
@@ -192,23 +211,24 @@ Component({
     _updatePageType() {
       let type = this.data.pageType;
       let that = this;
-      /*
       wx.request({
-        url: '',
+        url: 'https://tfleof.top/words/getAllWordsByStatus/' + type,
         method: 'GET',
-        data: {
-          type: type
-        },
         success(res) {
-          that.setData({
-            words: res.data
+          console.log(res);
+          let words = res.data.data;
+          words.forEach(item => {
+            item.display = false;
           })
+          that.setData({
+            words: words
+          })
+          console.log(that.data.words)
         },
         fail(err) {
           console.log(err)
         }
       })
-      */
       /*
       * 0: remembering
       * 1: easy to forget

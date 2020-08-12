@@ -1,5 +1,4 @@
 <view class="page">
-    <view></view>
     <view class="topMenu">
         <view class="left">
             <mp-icon model:icon="{{isEnDisplay ? 'eyes-on' : 'eyes-off'}}" color="black" size="{{30}}"
@@ -14,13 +13,11 @@
             </mp-icon>
         </view>
     </view>
-    <view>{{isEnDisplay&&isZhDisplay}}</view>
     <view class="page__bd list">  
       <view class="weui-cells" wx:for="{{words}}">
           <mp-slideview buttons="{{slideButtons}}"  
                         bindtap="displayWord" bindbuttontap="slideButtonTap" 
-                        data-index="{{index}}" data-id="{{item.id}}"
-                        class="{{WordMoving === item.id ? 'moveAnimation':'zzz'}}">
+                        data-index="{{index}}" data-id="{{item.id}}">
               <mp-cell wx:if="{{item.display}}" value="{{item.en}}" footer="{{item.zh}}"></mp-cell>
               <mp-cell wx:else model:value="{{isEnDisplay ? item.en : '...'}}" 
                                model:footer="{{isZhDisplay ? item.zh : '...'}}"  
