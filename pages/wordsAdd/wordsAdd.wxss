@@ -2,6 +2,16 @@
 .animation-page{
   animation: card 1s;
 }
+.auto{
+  padding-top: 13px;
+  padding-bottom: 5px;
+}
+.auto .auto-box{
+  color: #fff;
+  background: rgba(146,182,220);
+  padding: 4px;
+  border-radius:4px;
+}
 @keyframes card{
   0%{
     transform:translateX(0); 

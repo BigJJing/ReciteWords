@@ -9,12 +9,15 @@
       <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">
               <view class="weui-cell__bd">
-                  <textarea name="origin" class="weui-textarea" value="{{origin}}" placeholder="建议输入语言为：英语、法语等" style="height: 3.3em" />
+                  <textarea name="origin" class="weui-textarea" bindfocus="clearTranslate" bindblur="doTranslate" value="{{origin}}" placeholder="建议输入语言为：英语、法语等" style="height: 3.3em" />
               </view>
           </view>
       </view>
 
       <view class="weui-cells__title">译</view>
+      <view class="weui-cell auto" wx:if="{{autoTranslation !== ''}}"> 
+        <view class="auto-box" bindtap="addAutoTranslation">{{autoTranslation}}</view>
+      </view>
       <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">
               <view class="weui-cell__bd">
@@ -23,10 +26,10 @@
           </view>
       </view>
     </view>
-
+    <mp-loading type="circle" tips="正在添加中，请稍等" show="{{!isDone}}"></mp-loading>
     <view class="weui-btn-area">
-        <button class="weui-btn" type="primary" form-type="submit" data-next="false">完成</button>
-        <button class="weui-btn" type="default" form-type="submit" data-next="true">添加下一个</button>
+        <button class="weui-btn" type="primary" form-type="submit" data-next="false" disabled="{{!isDone}}">完成</button>
+        <button class="weui-btn" type="default" form-type="submit" data-next="true" disabled="{{!isDone}}">添加下一个</button>
     </view>
     
 </form>

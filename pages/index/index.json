@@ -1,7 +1,7 @@
 {
   "usingComponents": {
-    "mp-icon": "/dist/miniprogram_dist/icon/icon",
     "remembering": "/components/list/remembering",
+    "random": "/components/random/random",
     "settings": "/components/settings/settings",
     "feedback": "/components/feedback/feedback"
   }

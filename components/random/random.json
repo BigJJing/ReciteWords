@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mp-actionSheet": "/dist/miniprogram_dist/actionsheet/actionsheet"
+  }
+}

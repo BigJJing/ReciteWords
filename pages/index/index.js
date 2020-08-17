@@ -12,7 +12,7 @@ Page({
     },
     open: false,
     toRelative: true,
-    nowPage: 0
+    nowPage: 3
   },
   onLoad: function () {
     if (app.globalData.userInfo) { 

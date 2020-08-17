@@ -28,4 +28,13 @@
 .min_width_set .weui-cell__bd{
   min-width: 60% !important;
 }
-
+.nothing{
+  text-align: center;
+  font-size: 1.4rem;
+  color: #666;
+  padding: 40px;
+  margin-top: 5rem
+}
+.pronounce-cell{
+  padding: 2px 16px;
+}

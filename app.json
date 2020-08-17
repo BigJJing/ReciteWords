@@ -9,6 +9,10 @@
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
   },
+  "usingComponents": {
+    "mp-icon": "/dist/miniprogram_dist/icon/icon",
+    "mp-loading": "/dist/miniprogram_dist/loading/loading"
+  },
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 }

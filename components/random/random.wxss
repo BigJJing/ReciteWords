@@ -1,0 +1,78 @@
+/* components/random/random.wxss */
+.page{
+  width: 100%;
+  height: 100%;
+}
+.topMenu{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  box-shadow: 0px 1px 5px #eee;
+  background: #fff;
+  color:#666;
+}
+.topMenu view{
+  flex: 1;
+  text-align: center;
+  line-height: 40px;
+}
+.topMenu view:after{
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-bottom: 1px solid #666;
+    border-right: 1px solid #666;
+    transform: rotate(45deg);
+    margin-left: 10px;
+    margin-bottom: 2px;
+}
+.main .small-box{
+  position: fixed;
+  top:40;
+  left: 0;
+  height: 100%;
+  width: calc(100% - 32px);
+  padding: 20px 16px;
+  display: table;
+}
+.main .small-box .row{
+  display: table-row;
+  height: 50%;
+}
+.main .small-box .row view{
+  display: table-cell;
+  text-align: center;
+}
+.main .small-box .content view{ 
+  vertical-align: middle;
+  font-size: 30px;
+}
+.main .small-box .translation view{
+  vertical-align: top;
+  font-size: 16px;
+  color:#666;
+}
+.big-box{
+  padding: 30px 16px;
+}
+.big-box .content{
+  font-size: 18px;
+  text-align: left;
+  margin-bottom: 50px;
+}
+.big-box .translation{
+  font-size: 16px;
+  color:#666;
+}
+.right-switch{
+  position: fixed;
+  right: -120px;
+  top: calc(45% - 150px);
+  width: 200px;
+  height: 300px;
+  line-height: 300px;
+  background: rgba(0,0,0,0.7);
+  color:#fff;
+  border-radius: 50%;
+}

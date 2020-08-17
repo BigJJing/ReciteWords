@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "mp-form": "/dist/miniprogram_dist/form/form",
-    "mp-toptips": "/dist/miniprogram_dist/toptips/toptips"
+    "mp-toptips": "/dist/miniprogram_dist/toptips/toptips",
+    "mp-loading": "/dist/miniprogram_dist/loading/loading"
   }
 }

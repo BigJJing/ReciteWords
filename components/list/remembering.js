@@ -11,6 +11,8 @@ Component({
    * 组件的初始数据
    */
   data: {
+    isloading: false,
+    noWordTip: "",
     slideButtons: [{
       text: '易忘记',
     },
@@ -21,16 +23,14 @@ Component({
       type: 'warn',
       text: '删除',
     }],
-    words:[
-      {id:'1',en:"hello",zh:"你好",display:false},
-      {id:'2',en:"world",zh:"世界",display:false},
-    ],
+    words:[],
     isEnDisplay: true,
     isZhDisplay: true, 
     pronounciation: "",
   },
   lifetimes: {
     attached() {
+      
       console.log(this.data.pageType);
       this._updatePageType();
     }
@@ -94,20 +94,21 @@ Component({
     moveToEasyForget(id) {
       console.log("moveToEasyForget!!")
       let that = this;
-  
       wx.request({
-        url: 'https://tfleof.top/words/updateWordStatusById',
+        url: 'https://tfleof.top/words/updateWordInfoById',
         method: 'PUT',
         data: {
-          'id': id,
-          'status': 1
+          id: id,
+          status: 1
         },
         header: {
           'content-type': 'application/json'
         },
         success(res){
           console.log(res);
-          that.moveWordEffect(id);
+          if(res.statusCode == 200){
+            that.moveWordEffect(id);
+          }
         },
         fail(err){
           console.log(err)
@@ -115,17 +116,23 @@ Component({
       })
     },
     moveToRemembered(id) {
-      console.log("moveToRememberd!!")
+      console.log("moveToRememberd!!");
+      let that = this;
       wx.request({
-        url: '',
+        url: 'https://tfleof.top/words/updateWordInfoById',
         method: 'PUT',
         data: {
           id: id,
-          type: 2
+          status: 2
+        },
+        header: {
+          'content-type': 'application/json'
         },
         success(res){
           console.log(res);
-          this.moveWordEffect(id);
+          if(res.statusCode == 200){
+            that.moveWordEffect(id);
+          }
         },
         fail(err){
           console.log(err)
@@ -133,17 +140,23 @@ Component({
       })
     },
     moveToRemembering(id) {
-      console.log("moveToRemembering!!")
+      console.log("moveToRemembering!!");
+      let that = this;
       wx.request({
-        url: '',
+        url: 'https://tfleof.top/words/updateWordInfoById',
         method: 'PUT',
         data: {
           id: id,
-          type: 0
+          status: 0
+        },
+        header: {
+          'content-type': 'application/json'
         },
         success(res){
           console.log(res);
-          this.moveWordEffect(id);
+          if(res.statusCode == 200){
+            that.moveWordEffect(id);
+          }
         },
         fail(err){
           console.log(err)
@@ -159,10 +172,12 @@ Component({
           return;
         }
       })
-      let that = this;
-      that.setData({
+      this.setData({
         words: words
       })
+      if(words.length == 0){
+        this.hasNoWord();
+      }
       /*
       setTimeout(function(){
         that.setData({
@@ -211,6 +226,11 @@ Component({
     _updatePageType() {
       let type = this.data.pageType;
       let that = this;
+      if(that.data.isloading == false){
+        that.setData({
+          isloading: true
+        })
+      }
       wx.request({
         url: 'https://tfleof.top/words/getAllWordsByStatus/' + type,
         method: 'GET',
@@ -220,13 +240,19 @@ Component({
           words.forEach(item => {
             item.display = false;
           })
+          if(words.length == 0){
+            that.hasNoWord();
+          }
           that.setData({
-            words: words
+            words: words,
+            isloading: false
           })
-          console.log(that.data.words)
         },
         fail(err) {
-          console.log(err)
+          console.log(err);
+          that.setData({
+            isloading: false
+          })
         }
       })
       /*
@@ -235,6 +261,9 @@ Component({
       * 2: remembered
       */
       if(type == 0){
+        wx.setNavigationBarTitle({
+          title: '正在记'
+        })
         that.setData({
           slideButtons: [{
             text: '易忘记',
@@ -249,6 +278,9 @@ Component({
         })
       }
       if(type == 1){
+        wx.setNavigationBarTitle({
+          title: '易忘记'
+        })
         that.setData({
           slideButtons: [{
             text: '已牢记',
@@ -260,6 +292,9 @@ Component({
         })
       }
       if(type == 2){
+        wx.setNavigationBarTitle({
+          title: '已牢记'
+        })
         that.setData({
           slideButtons: [{
             text: '正在记',
@@ -268,6 +303,24 @@ Component({
             type: 'warn',
             text: '删除',
           }],
+        })
+      }
+    },
+    hasNoWord() {
+      let type = this.data.pageType;
+      if(type == 0){
+        this.setData({
+          noWordTip: "真棒！所有单词都记完啦，快去添加新单词吧~"
+        })
+      }
+      else if(type == 1){
+        this.setData({
+          noWordTip: "已经没有单词能难得倒我了呢"
+        })
+      }
+      else if(type == 2){
+        this.setData({
+          noWordTip: "要多多努力记单词哟"
         })
       }
     },

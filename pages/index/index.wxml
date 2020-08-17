@@ -38,13 +38,19 @@
         </view>
     </view>
     <view class="weui-cell {{nowPage == 3 ? 'selected' : ''}}" bindtap="toPage" data-type="3">
-        <view class="weui-cell__hd"><view><mp-icon icon="setting" color="{{nowPage == 3 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
+        <view class="weui-cell__hd"><view><mp-icon icon="photo-wall" color="{{nowPage == 3 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
+        <view class="weui-cell__bd">
+            随机记
+        </view>
+    </view>
+    <view class="weui-cell {{nowPage == 4 ? 'selected' : ''}}" bindtap="toPage" data-type="4">
+        <view class="weui-cell__hd"><view><mp-icon icon="setting" color="{{nowPage == 4 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
         <view class="weui-cell__bd">
             设置
         </view>
     </view>
-    <view class="weui-cell {{nowPage == 4 ? 'selected' : ''}}" bindtap="toPage" data-type="4">
-        <view class="weui-cell__hd"><view><mp-icon icon="comment" color="{{nowPage == 4 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
+    <view class="weui-cell {{nowPage == 5 ? 'selected' : ''}}" bindtap="toPage" data-type="5">
+        <view class="weui-cell__hd"><view><mp-icon icon="comment" color="{{nowPage == 5 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon></view></view>
         <view class="weui-cell__bd">
           反馈
         </view>
@@ -60,7 +66,8 @@
     <remembering wx:if="{{nowPage == 0}}" pageType="0"/>
     <remembering wx:if="{{nowPage == 1}}" pageType="1"/>
     <remembering wx:if="{{nowPage == 2}}" pageType="2"/>
-    <settings wx:if="{{nowPage == 3}}"/>
-    <feedback wx:if="{{nowPage == 4}}"/>
+    <random wx:if="{{nowPage == 3}}"/>
+    <settings wx:if="{{nowPage == 4}}"/>
+    <feedback wx:if="{{nowPage == 5}}"/>
   </view>
 </view>

@@ -8,25 +8,14 @@ Page({
     isNext:false,
     origin: "",
     translation: "",
-    error:""
+    error:"",
+    isDone: true,
+    autoTranslation: "",
   },
-  goNext(e) {
-    this.addWord();
-    this.setData({
-      isNext: true
+  onLoad() {
+    wx.setNavigationBarTitle({
+      title: '添加单词'
     })
-    let that = this;
-    setTimeout(function(){
-      that.setData({
-        origin: "",
-        translation: ""
-      })
-    },500)
-    setTimeout(function(){
-      that.setData({
-        isNext: false
-      })
-    },1000)
   },
   goBack(e) {
 
@@ -46,6 +35,9 @@ Page({
       })
       return false;
     }
+    this.setData({
+      isDone: false
+    })
     let isNext = e.detail.target.dataset.next;
     let that = this;
     wx.request({
@@ -60,10 +52,14 @@ Page({
       },
       success(res){
         console.log(res);
+        that.setData({
+          isDone: true
+        })
         if(isNext === "true"){
           that.setData({
             origin: "",
-            translation: ""
+            translation: "",
+            autoTranslation: ""
           })
         }
         else{
@@ -71,16 +67,46 @@ Page({
         }
       },
       fail(err){
+        that.setData({
+          isDone: true,
+          error: "单词未保存，请重试！"
+        })
         console.log(err)
       }
     })
   },
-  addWord(){
-
-  },
   tapDialogButton(e) {
     this.setData({
       showOneButtonDialog: false
+    })
+  },
+  doTranslate(e) {
+    let val = e.detail.value;
+    let that = this;
+    if(val !== ""){
+      wx.request({
+        url: 'https://api.66mz8.com/api/translation.php?info=' + val,
+        method: 'GET',
+        success(res) {
+          console.log(res);
+          that.setData({
+            autoTranslation: res.data.fanyi
+          })
+        },
+        error(err) {
+          console.log(err)
+        }
+      })
+    }
+  },
+  clearTranslate(e) {
+    this.setData({
+      autoTranslation: ""
+    })
+  },
+  addAutoTranslation(e) {
+    this.setData({
+      translation: this.data.autoTranslation
     })
   }
 })

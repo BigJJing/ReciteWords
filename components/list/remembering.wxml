@@ -1,32 +1,39 @@
 <view class="page">
-    <view class="topMenu">
-        <view class="left">
-            <mp-icon model:icon="{{isEnDisplay ? 'eyes-on' : 'eyes-off'}}" color="black" size="{{30}}"
-                     class="eye_btn"
-                     bindtap="changeEnStatus">
-            </mp-icon>
+    
+    <view class="nothing" wx:if="{{words.length == 0}}">{{noWordTip}}</view>
+    <view wx:else>
+        <view class="topMenu">
+            <view class="left">
+                <mp-icon model:icon="{{isEnDisplay ? 'eyes-on' : 'eyes-off'}}" color="black" size="{{30}}"
+                        class="eye_btn"
+                        bindtap="changeEnStatus">
+                </mp-icon>
+            </view>
+            <view class="right">
+                <mp-icon model:icon="{{isZhDisplay ? 'eyes-on' : 'eyes-off'}}" color="black" size="{{30}}"
+                        class="eye_btn"
+                        bindtap="changeZhStatus">
+                </mp-icon>
+            </view>
         </view>
-        <view class="right">
-            <mp-icon model:icon="{{isZhDisplay ? 'eyes-on' : 'eyes-off'}}" color="black" size="{{30}}"
-                     class="eye_btn"
-                     bindtap="changeZhStatus">
-            </mp-icon>
+        <view class="page__bd list">  
+            <view wx:if="{{isloading}}"><mp-loading type="circle" tips="加载中" show="true"></mp-loading></view>
+            <view class="weui-cells" wx:for="{{words}}">
+                <mp-slideview buttons="{{slideButtons}}"  
+                                bindtap="displayWord" bindbuttontap="slideButtonTap" 
+                                data-index="{{index}}" data-id="{{item.id}}">
+                    <mp-cell wx:if="{{item.display}}" value="{{item.en}}" footer="{{item.zh}}"></mp-cell>
+                    <mp-cell wx:else model:value="{{isEnDisplay ? item.en : '...'}}" 
+                                    model:footer="{{isZhDisplay ? item.zh : '...'}}"  
+                                    class="{{(isEnDisplay&&isZhDisplay)||item.display ? 'min_width_set' : ''}}">
+                    </mp-cell>
+                    <view class="pronounce-cell" bindtap="pronounce" data-word="{{item.en}}">
+                        <mp-icon icon="volume-down" color="{{nowPage == 4 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon>
+                    </view>
+                </mp-slideview>
+                
+            </view>
         </view>
     </view>
-    <view class="page__bd list">  
-      <view class="weui-cells" wx:for="{{words}}">
-          <mp-slideview buttons="{{slideButtons}}"  
-                        bindtap="displayWord" bindbuttontap="slideButtonTap" 
-                        data-index="{{index}}" data-id="{{item.id}}">
-              <mp-cell wx:if="{{item.display}}" value="{{item.en}}" footer="{{item.zh}}"></mp-cell>
-              <mp-cell wx:else model:value="{{isEnDisplay ? item.en : '...'}}" 
-                               model:footer="{{isZhDisplay ? item.zh : '...'}}"  
-                               class="{{(isEnDisplay&&isZhDisplay)||item.display ? 'min_width_set' : ''}}">
-              </mp-cell>
-          </mp-slideview>
-          <!--
-          <view bindtap="pronounce" data-word="{{item.en}}">aa{{pronounciation}}</view>
-          -->
-      </view>
-    </view>
+    <h1>{{hasAnyWord}}</h1>
 </view>
