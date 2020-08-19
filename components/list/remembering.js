@@ -1,3 +1,6 @@
+
+const url = 'http://dict.youdao.com/dictvoice?type=0&audio=';
+var audioContexts = [];
 // components/remembering.js
 Component({
   /**
@@ -26,17 +29,19 @@ Component({
     words:[],
     isEnDisplay: true,
     isZhDisplay: true, 
+    showPronounciation: true,
     pronounciation: "",
   },
   lifetimes: {
     attached() {
-      
+      console.log(1)
       console.log(this.data.pageType);
       this._updatePageType();
     }
   },
   pageLifetimes:{
     show(){
+      console.log(2)
       console.log(this.data.pageType);
       this._updatePageType()
     }
@@ -198,7 +203,11 @@ Component({
         isZhDisplay: !this.data.isZhDisplay
       })
       this._updateWordsDisplayStatus(this.data.isZhDisplay)
-      
+    },
+    changePronounciationStatus() {
+      this.setData({
+        showPronounciation: !this.data.showPronounciation
+      })
     },
     _updateWordsDisplayStatus(isDisplay) {  //isDisplay: true,false
       let words = this.data.words;
@@ -239,6 +248,13 @@ Component({
           let words = res.data.data;
           words.forEach(item => {
             item.display = false;
+            item.isplaying = false;
+            /*
+            item.audioAction = {
+              method: 'setCurrentTime',
+              data: 0
+            }
+            */
           })
           if(words.length == 0){
             that.hasNoWord();
@@ -247,6 +263,7 @@ Component({
             words: words,
             isloading: false
           })
+          console.log(that.data.words)
         },
         fail(err) {
           console.log(err);
@@ -325,22 +342,120 @@ Component({
       }
     },
     pronounce(e) {
-      console.log(e.currentTarget.dataset.word);
-      let word = e.currentTarget.dataset.word;
-      let that = this;
-      wx.request({
-        url: 'https://dict.youdao.com/dictvoice?type=0&audio=hello',
-        method: 'GET',
-        success(res) {
-          console.log(res);
-          that.setData({
-            pronounciation: res.data
-          })
-        },
-        fail(err) {
-          console.log(err)
+      console.log(e);
+      var innerAudioCtx = wx.createInnerAudioContext();
+      const {system} = wx.getSystemInfoSync();
+
+      let en = e.currentTarget.dataset.en
+      en = en.replace(/\s/g,'%20'); //ios系统url中带空格无法识别，要用%20来替换空格
+      console.log(en)
+      let audioUrl = url + en;
+      console.log(audioUrl);
+      let id = e.currentTarget.dataset.id;
+      let words = this.data.words;
+      //停止其他audio播放
+      audioContexts.forEach(item => {
+        item.stop();
+        item.destroy();
+      })
+      audioContexts = [];
+      words.forEach(item => {
+        if(item.id == id){
+          item.isplaying = true
+        }
+        else{
+          //防止多次点击导致的没有触发onEnded
+          item.isplaying = false
         }
       })
+      console.log(words);
+      this.setData({
+        words:words
+      })
+      //添加audio事件监听
+      this.audioEvent(innerAudioCtx,id);
+      //分别对ios和安卓系统进行处理
+      if (system.toLocaleLowerCase().includes('ios')) {
+        // ios 下download音频文件会报错
+        innerAudioCtx.src = audioUrl;
+        audioContexts.push(innerAudioCtx);
+        innerAudioCtx.play();
+      } else {
+        wx.downloadFile({
+          audioUrl,
+          success: ({
+            tempFilePath,
+            statusCode
+          }) => {
+            console.log(statusCode, tempFilePath)
+            if (statusCode === 200) {
+              innerAudioCtx.src = tempFilePath;
+              audioContexts.push(innerAudioCtx);
+              innerAudioCtx.play()
+            }
+          }
+        })
+      }
+      /*  
+      let en = e.currentTarget.dataset.en;
+      console.log(en)
+      const innerAudioContext = wx.createInnerAudioContext()
+      innerAudioContext.autoplay = true;        //自动播放
+      innerAudioContext.obeyMuteSwitch = false; //静音也能发出声音
+      innerAudioContext.loop = false;
+      innerAudioContext.src = 'http://dict.youdao.com/dictvoice?type=0&audio=' + en;
+      innerAudioContext.onPlay(() => {
+        console.log('开始播放')
+      })
+      innerAudioContext.onError((res) => {
+        console.log(res);
+        console.log(res.errMsg)
+        console.log(res.errCode)
+      })
+*/
+     /*
+      console.log(this.data.words)
+      let id = e.currentTarget.dataset.id;
+      console.log(id)
+      let words = this.data.words;
+      for(let i = 0; i < words.length; i++){
+        if(words[i].id == id){
+          console.log(1)
+          words[i].audioAction = {
+            method: 'play'
+          }
+          return;
+        }
+      }
+      this.setData({
+        words: words
+      })
+      */
+    },
+    audioEvent(innerAudioCtx,id) {
+      innerAudioCtx.onWaiting(() => {
+        console.log('等待开始播放...');
+      });
+      innerAudioCtx.onPlay(res => console.log('播放中: ', res))
+      innerAudioCtx.onStop(() => {
+        console.log('播放停止（onStop）...');
+      });
+      innerAudioCtx.onEnded(() => {
+        console.log('播放结束（onEnded）...');
+        innerAudioCtx.destroy();
+        let words = this.data.words;
+        words.forEach(item => {
+          if(item.id == id){
+            item.isplaying = false;
+            return;
+          }
+        })
+        console.log(3)
+        this.setData({
+          words: words
+        })
+      });
+      innerAudioCtx.onError(err => console.log('播放错误: ', err))
     }
   }
 })

@@ -9,13 +9,14 @@
   background-color: rgba(255,255,255);
   box-shadow:0px 1px 5px #eee;
   z-index: 99;
+  display: flex;
 }
-.topMenu .left , .topMenu .right{
-  width: 50%;
+.topMenu .left ,.topMenu .right{
+  flex: 1;
   display: inline-block;
   text-align: center;
 }
-.eye_btn{
+.icon_btn{
   display: inline-block;
   padding: 10px 20px;
 } 
@@ -35,6 +36,6 @@
   padding: 40px;
   margin-top: 5rem
 }
-.pronounce-cell{
+.pronounce-cell .pronounce-btn{
   padding: 2px 16px;
 }

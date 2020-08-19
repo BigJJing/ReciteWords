@@ -1,25 +1,61 @@
 <!--components/random/random.wxml-->
 <view wx:if="{{isloading}}"><mp-loading type="circle" tips="加载中" show="true"></mp-loading></view>
-<view wx:else class="page">
+<view wx:else class="page {{showContentMenu||showRangeMenu ? 'full-height' : ''}}">
   <view class="topMenu">
     <view class="content" bindtap="expandContentMenu">{{contentGroups[contentSelected].text}}</view>
     <view class="range" bindtap="expandRangeMenu">{{rangeGroups[rangeSelected].text}}</view>
   </view>
-  <mp-actionSheet ext-class="contentMenu" bindactiontap="selectContentMenu" show="{{showContentMenu}}" actions="{{contentGroups}}" title="{{'测试内容: ' + contentGroups[contentSelected].text}}"></mp-actionSheet>
-  <mp-actionSheet ext-class="rangeMenu" bindactiontap="selectRangeMenu" show="{{showRangeMenu}}" actions="{{rangeGroups}}" title="{{'测试范围: ' + rangeGroups[rangeSelected].text}}"></mp-actionSheet>
   <view class="main">
-    <!--
-    <view class="small-box">
-      <view class="row content"><view>When it comes to a creative logo designer, nothing is as valuable</view></view>
-      <view class="row translation"><view>查看译文</view></view>
+    <view wx:if="{{words.length == 0}}">     
+      <view class="nothing">当前列表中没有单词欸，快去添加吧~</view>
     </view>
-    -->
-    <view class="big-box">
-      <view class="content">When it comes to a creative logo designer, nothing is as valuable as experience. Before you choose a designer to create a unique logo for your business, make sure you check out the number of logos created by that designer. This should give you an idea of how experienced he or she is.</view>
-      <view class="translation"><view>当涉及创意徽标设计师时，没有什么比经验更有价值。 在选择设计师为您的企业创建独特徽标之前，请确保您签出了该设计师创建的徽标数量。 这应该使您了解他或她的经验。</view></view>
+    <view wx:elif="{{isEnd}}">     
+      <view class="nothing">都记完啦，真是太棒了！</view>
+    </view>
+    <view wx:elif="{{isStart}}">     
+      <view class="nothing">已经到底了呢，赶快去记下一个单词吧~</view>
+    </view>
+    <view wx:else>
+      <view class="small-box" wx:if="{{words[index].en.length + words[index].zh.length < 100}}">
+        <view class="row content"><view>{{contentSelected == 0 ? words[index].zh : words[index].en}}</view></view>
+          <view class="row translation">
+            <view wx:if="{{!showAnswer}}" class="look" bindtap="lookAnswer">就瞄一眼答案</view>
+            <view wx:else bindtap="closeAnswer">{{contentSelected == 0 ? words[index].en : words[index].zh}}</view>
+          </view>
+      </view>
+      <view class="big-box" wx:else>
+        <view class="row content"><view>{{contentSelected == 0 ? words[index].zh : words[index].en}}</view></view>
+        <view class="translation">
+          <view wx:if="{{!showAnswer}}" class="look" bindtap="lookAnswer">就瞄一眼答案</view>
+          <view wx:else bindtap="closeAnswer">{{contentSelected == 0 ? words[index].en : words[index].zh}}</view>
+        </view>
+      </view>
     </view>
   </view>
-  <view class="right-switch">
-    <mp-icon icon="arrow" color="white" size="{{30}}"></mp-icon>
+
+  <view class="left-switch " bindtap="goBack" wx:if="{{!isStart}}">
+    <mp-icon icon="arrow" color="white" size="{{24}}" class="left-icon"></mp-icon>
   </view>
+  <view class="right-switch" bindtap="goNext" bindtouchstart="touchNext" wx:if="{{!isEnd}}">
+    <mp-icon icon="arrow" color="white" size="{{24}}"></mp-icon>
+  </view>
+
+  <view class="box">
+    <mp-actionSheet ext-class="contentMenu" 
+                    bindactiontap="selectContentMenu" 
+                    bindclose="closeContentMenu"
+                    show="{{showContentMenu}}" 
+                    actions="{{contentGroups}}" 
+                    title="{{'测试内容: ' + contentGroups[contentSelected].text}}">
+    </mp-actionSheet>
+    <mp-actionSheet ext-class="rangeMenu" 
+                    bindactiontap="selectRangeMenu"
+                    bindclose="closeRangeMenu" 
+                    show="{{showRangeMenu}}" 
+                    actions="{{rangeGroups}}" 
+                    title="{{'测试范围: ' + rangeGroups[rangeSelected].text}}">
+    </mp-actionSheet>
+  </view>
+
 </view>
+

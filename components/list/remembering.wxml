@@ -5,13 +5,19 @@
         <view class="topMenu">
             <view class="left">
                 <mp-icon model:icon="{{isEnDisplay ? 'eyes-on' : 'eyes-off'}}" color="black" size="{{30}}"
-                        class="eye_btn"
+                        class="icon_btn"
                         bindtap="changeEnStatus">
+                </mp-icon>
+            </view>
+            <view class="center">
+                <mp-icon model:icon="{{showPronounciation ? 'volume-down' : 'volume-off'}}" color="black" size="{{30}}"
+                        class="icon_btn"
+                        bindtap="changePronounciationStatus">
                 </mp-icon>
             </view>
             <view class="right">
                 <mp-icon model:icon="{{isZhDisplay ? 'eyes-on' : 'eyes-off'}}" color="black" size="{{30}}"
-                        class="eye_btn"
+                        class="icon_btn"
                         bindtap="changeZhStatus">
                 </mp-icon>
             </view>
@@ -27,13 +33,32 @@
                                     model:footer="{{isZhDisplay ? item.zh : '...'}}"  
                                     class="{{(isEnDisplay&&isZhDisplay)||item.display ? 'min_width_set' : ''}}">
                     </mp-cell>
-                    <view class="pronounce-cell" bindtap="pronounce" data-word="{{item.en}}">
-                        <mp-icon icon="volume-down" color="{{nowPage == 4 ? '#5cabff' : '#333'}}" size="{{25}}"></mp-icon>
+                    <view class="pronounce-cell" wx:if="{{showPronounciation}}">
+                        <mp-icon icon="volume-down" 
+                                 class="pronounce-btn"
+                                 color="#333" size="{{25}}"
+                                 bindtap="pronounce" 
+                                 data-id="{{item.id}}" data-en="{{item.en}}"
+                                 wx:if="{{!item.isplaying}}"></mp-icon>
+                        <mp-icon icon="pause" 
+                                 class="pronounce-btn"
+                                 color="#333" size="{{25}}"
+                                 bindtap="" 
+                                 data-id="{{item.id}}" data-en="{{item.en}}"
+                                 wx:else ></mp-icon>
+                        <!--
+                        <audio src="{{'http://dict.youdao.com/dictvoice?type=0&audio=' + item.en}}" 
+                               action="{{item.audioAction}}" 
+                               loop="true"
+                               binderror="playAudioError"
+                               bindplay="playAudio"
+                               bindended="playAudioOver">
+                        </audio>
+                        -->
                     </view>
                 </mp-slideview>
                 
             </view>
         </view>
     </view>
-    <h1>{{hasAnyWord}}</h1>
 </view>

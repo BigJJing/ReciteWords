@@ -19,21 +19,51 @@ Component({
         { text: '译文', value: 1 },
       ],
       rangeGroups: [
-        { text: '随机', value: 0 },
-        { text: '正在记', value: 1 },
-        { text: '易忘记', value: 2 },
-        { text: '已牢记', value: 3 }
+        { text: '正在记', value: 0 },
+        { text: '易忘记', value: 1 },
+        { text: '已牢记', value: 2 },
+        { text: '随机', value: 3 }
       ],
       contentSelected:0,
-      rangeSelected: 0
+      rangeSelected: 3,
+      words: [],  
+      allWords: [], //保存全部单词
+      index: 0,     //正在显示的单词列表words中的words[index]
+      showAnswer: false,
+      isEnd: false,
+      isStart: false
   },
   lifetimes: {
-    ready() {
-      console.log("When it comes to a creative logo designer, nothing is as valuable".length)
-      this.setData({
-        isloading: false
+    created() {
+      let that = this;
+      wx.request({
+        url: 'https://tfleof.top/words/getAllWords',
+        method: 'GET',
+        success(res) {
+          console.log(res);
+          //打乱顺序
+          let words = res.data.data;
+          words.sort(() => {
+            return Math.random() - 0.5
+          })
+          that.setData({
+            words: words,
+            allWords: words,
+            isloading: false
+          })
+        },
+        fail(err) {
+          this.setData({
+            isloading: false
+          })
+          console.log(err)
+        }
       })
-    }
+    },
+    attached() {
+      
+    },
+
   },
 
   /**
@@ -48,10 +78,34 @@ Component({
       })
     },
     selectRangeMenu(e) {
+      console.log(e);
+      let status = e.detail.value;
+      console.log(status);
       this.setData({
-        rangeSelected: e.detail.value,
+        rangeSelected: status,
         showRangeMenu: false
       })
+      let allWords = this.data.allWords;
+      let arr = [];
+      if(status != 3){
+        allWords.forEach(item => {
+          if(item.status == status){
+            arr.push(item)
+          }
+        })
+      }
+      else{
+        arr = allWords;
+      }
+      console.log(arr);
+      arr.sort(() => {
+        return Math.random() - 0.5
+      })
+      this.setData({
+        words: arr,
+        index: 0
+      })
+      
     },
     expandContentMenu(e) {
       this.setData({
@@ -61,6 +115,82 @@ Component({
     expandRangeMenu(e) {
       this.setData({
         showRangeMenu: true
+      })
+    },
+    closeContentMenu(e) {
+      this.setData({
+        showContentMenu: false
+      })
+    },
+    closeRangeMenu(e) {
+      this.setData({
+        showRangeMenu: false
+      })
+    },
+    goNext(e) {
+      this.setData({
+        isStart: false,
+        isEnd: false,
+      })
+      let index = this.data.index;
+      console.log(index)
+      if(index + 1 >= this.data.words.length){
+        this.setData({
+          isEnd: true,
+          index: this.data.words.length
+        })
+      }
+      else{
+        this.setData({
+          isEnd: false,
+          index: index + 1
+        })
+      }
+      /*
+      this.setData({
+        index: index + 1 >= this.data.words.length ? 0 : index + 1
+      })
+      */
+      this.closeAnswer();
+    },
+    goBack(e) {
+      this.setData({
+        isStart: false,
+        isEnd: false,
+      })
+      let index = this.data.index;
+      console.log(index)
+      if(index - 1 < 0){
+        this.setData({
+          isStart: true,
+          index: -1
+        })
+      }
+      else{
+        this.setData({
+          isStart: false,
+          index: index - 1
+        })
+      } 
+      /*
+      this.setData({
+        isStart: true,
+        //index: index - 1 < 0 ? this.data.words.length - 1 :  index - 1
+      })
+      */
+      this.closeAnswer();
+    },
+    touchNext(e) {
+      
+    },
+    lookAnswer(e) {
+      this.setData({
+        showAnswer: true
+      })
+    },
+    closeAnswer(e) {
+      this.setData({
+        showAnswer: false
       })
     }
   }

@@ -9,7 +9,14 @@
       <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">
               <view class="weui-cell__bd">
-                  <textarea name="origin" class="weui-textarea" bindfocus="clearTranslate" bindblur="doTranslate" value="{{origin}}" placeholder="建议输入语言为：英语、法语等" style="height: 3.3em" />
+                  <textarea name="origin" 
+                            class="weui-textarea" 
+                            maxlength="-1"
+                            bindfocus="clearTranslate" 
+                            bindblur="doTranslate" 
+                            value="{{origin}}" 
+                            placeholder="建议输入语言为：英语、法语等" 
+                            style="height: 3.3em" />
               </view>
           </view>
       </view>
@@ -21,7 +28,12 @@
       <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">
               <view class="weui-cell__bd">
-                  <textarea name="translation" class="weui-textarea" value="{{translation}}" placeholder="建议输入语言为：汉语" style="height: 3.3em" />
+                  <textarea name="translation" 
+                            class="weui-textarea" 
+                            maxlength="-1"
+                            value="{{translation}}"
+                            placeholder="建议输入语言为：汉语"
+                            style="height: 3.3em"/>
               </view>
           </view>
       </view>
